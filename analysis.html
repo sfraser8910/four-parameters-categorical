@@ -92,7 +92,16 @@ window.Quarto = {
 </header>
 
 
-<p>Of the many factors that effect voting choice, sex is one of the most interesting. To answer the question “What was the difference in voting preference of men and women in the 1992 US Presidential election among supporters of the three leading candidates: Clinton, Bush and Perot?” we considered US presidential election data collected regularly since 1948 by the American National Election Studies (ANES).However, one possible weakness in our approach is that stability may not hold due to changes overtime.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Of the many factors that effect voting choice, sex is one of the most interesting. To answer the question “What was the difference in voting preference of men and women in the 1992 US Presidential election among supporters of the three leading candidates: Clinton, Bush and Perot?” we considered US presidential election data collected regularly since 1948 by the American National Election Studies (ANES).However, one possible weakness in our approach is that stability may not hold due to changes overtime. I voting choice in the 1992 US Presidential election as a multinomial function of sex. Roughly 53% of voted for Clinton, but the confidence interval for that values is 48%-58%.</p>
 <p><span class="math display">\[
 \log\left(\frac{P(Y = j)}{P(Y = \text{base})}\right) = \beta_{0j} + \beta_{1j}X_1 + \beta_{2j}X_2 + \cdots + \beta_{pj}X_p \quad \text{for } j \in \{\text{Clinton}, \text{Bush}, \text{Perot}\} \setminus \{\text{base}\}
 \]</span></p>
