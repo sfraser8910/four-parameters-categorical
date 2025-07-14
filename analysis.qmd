@@ -1,0 +1,47 @@
+---
+title: "Four Parameters Categorical"
+format: html
+execute: 
+  echo: false
+---
+
+Of the many factors that effect voting choice, sex is one of the most interesting. To answer the question "What was the difference in voting preference of men and women in the 1992 US Presidential election among supporters of the three leading candidates: Clinton, Bush and Perot?" we considered US presidential election data collected regularly since 1948 by the American National Election Studies (ANES).However, one possible weakness in our approach is that stability may not hold due to changes overtime. 
+
+$$
+\log\left(\frac{P(Y = j)}{P(Y = \text{base})}\right) = \beta_{0j} + \beta_{1j}X_1 + \beta_{2j}X_2 + \cdots + \beta_{pj}X_p \quad \text{for } j \in \{\text{Clinton}, \text{Bush}, \text{Perot}\} \setminus \{\text{base}\}
+$$
+
+$$
+\log\left(\frac{P(Y = \text{Clinton})}{P(Y = \text{Perot})}\right) = \beta_{0}^{(C)} + \beta_{1}^{(C)} \cdot \text{sex}
+$$
+
+$$
+\begin{aligned}
+\log\left(\frac{P(Y = \text{Clinton})}{P(Y = \text{Perot})}\right) &= 0.80 \cdot \text{sex}_\text{Female} \\\\
+\log\left(\frac{P(Y = \text{Bush})}{P(Y = \text{Perot})}\right) &= -0.60 \cdot \text{sex}_\text{Female}
+\end{aligned}
+$$
+
+```{r}
+#| message: false
+library(tidyverse)  
+library(primer.data)
+library(tidymodels)
+library(broom)
+```
+
+```{r}
+#| cache: true
+nes_92 <- nes |> 
+  filter(year == 1992) |> 
+  select(sex, pres_vote) |> 
+  drop_na() |> 
+  mutate(pres_vote = as.factor(case_when(
+    pres_vote == "Democrat" ~ "Clinton",
+    pres_vote == "Republican" ~ "Bush",
+    pres_vote == "Third Party" ~ "Perot",
+  ))) 
+
+fit_nes <- multinom_reg(engine = "nnet") |>
+  fit(pres_vote ~ sex, data = nes_92)
+```
